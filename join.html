@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Join / Contact — ACS SCC</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <nav class="nav container">
+    <a href="index.html" class="brand">
+      <span class="logo-badge">SCC</span>
+      ACS STEM/Coding Club
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="sessions.html">Sessions</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="join.html" class="active">Join / Contact</a></li>
+    </ul>
+    <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+  </nav>
+</header>
+
+<section class="hero" style="padding:60px 0 40px;">
+  <div class="container">
+    <span class="eyebrow">Get Involved</span>
+    <h1>Join <span>ACS SCC</span></h1>
+    <p>Fill out the form below or reach out directly — we'd love to have you at our next session.</p>
+  </div>
+</section>
+
+<section style="padding-top:0;" id="contact">
+  <div class="container">
+    <div class="form-wrap">
+      <form id="contact-form">
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" name="name" required placeholder="Your name" />
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required placeholder="you@example.com" />
+        </div>
+        <div class="form-group">
+          <label for="grade">Grade Level</label>
+          <select id="grade" name="grade">
+            <option>9th Grade</option>
+            <option>10th Grade</option>
+            <option>11th Grade</option>
+            <option>12th Grade</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="interest">Which track interests you?</label>
+          <select id="interest" name="interest">
+            <option>Beginner Python</option>
+            <option>Robotics</option>
+            <option>Web Dev / AI</option>
+            <option>DSA</option>
+            <option>Not sure yet — just exploring!</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="message">Message (optional)</label>
+          <textarea id="message" name="message" placeholder="Anything you'd like us to know?"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;">Submit</button>
+        <p class="form-note" id="form-success" style="display:none;" role="status">
+          🎉 Thanks for reaching out — we'll be in touch soon!
+        </p>
+      </form>
+    </div>
+
+    <div class="section-header" style="margin-top:56px;">
+      <h2>Other Ways to Reach Us</h2>
+    </div>
+    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); max-width:760px; margin:0 auto;">
+      <div class="card">
+        <div class="card-body" style="text-align:center;">
+          <h3>💬 Discord</h3>
+          <p>Join our server for updates and to chat with members.</p>
+          <div class="card-links" style="justify-content:center;">
+            <a href="#">Join Discord ↗</a>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body" style="text-align:center;">
+          <h3>📸 Instagram</h3>
+          <p>Follow along for event photos and announcements.</p>
+          <div class="card-links" style="justify-content:center;">
+            <a href="#">@acs.scc ↗</a>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body" style="text-align:center;">
+          <h3>✉️ Email</h3>
+          <p>Reach the officers directly with any questions.</p>
+          <div class="card-links" style="justify-content:center;">
+            <a href="mailto:acsscc@acs.edu">acsscc@acs.edu</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-bottom">© 2026 ACS STEM/Coding Club. All rights reserved.</div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
