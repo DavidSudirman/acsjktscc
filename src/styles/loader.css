@@ -1,0 +1,146 @@
+/* ============================================================
+   Boot screen. Present from the first paint, so there is never
+   a flash of an empty black page while three.js spins up.
+   ============================================================ */
+
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  background: var(--ink);
+  transition: opacity 900ms var(--ease);
+}
+
+.loader[data-done="true"] {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.loader-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+  font-family: var(--font-mono);
+  padding: 0 24px;
+  text-align: center;
+}
+
+.loader-brand {
+  font-size: 0.8125rem;
+  letter-spacing: 0.52em;
+  text-indent: 0.52em;
+  color: var(--paper);
+}
+
+.loader-title {
+  font-size: 0.625rem;
+  letter-spacing: 0.3em;
+  color: var(--paper-faint);
+  text-transform: uppercase;
+}
+
+.loader-bar {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+}
+
+.loader-cells {
+  color: var(--paper-faint);
+  white-space: nowrap;
+}
+
+.loader-cells b {
+  color: var(--paper);
+  font-weight: 400;
+}
+
+.loader-pct {
+  color: var(--paper);
+  font-variant-numeric: tabular-nums;
+  min-width: 4ch;
+  text-align: right;
+}
+
+.loader-step {
+  font-size: 0.625rem;
+  letter-spacing: 0.18em;
+  color: var(--paper-faint);
+  min-height: 1em;
+}
+
+.loader-step::after {
+  content: "";
+  animation: dots 1.4s steps(4, end) infinite;
+}
+
+@keyframes dots {
+  0% {
+    content: "";
+  }
+  25% {
+    content: ".";
+  }
+  50% {
+    content: "..";
+  }
+  75% {
+    content: "...";
+  }
+}
+
+.loader-rule {
+  width: min(280px, 70vw);
+  height: 1px;
+  background: var(--rule);
+}
+
+/* The scene doesn't cut in — it surfaces. */
+#stage {
+  opacity: 0;
+  transform: scale(1.04);
+  transition: opacity 1600ms var(--ease), transform 2200ms var(--ease);
+}
+
+#stage[data-revealed="true"] {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Overlay copy waits for the environment to arrive before it does. */
+.story {
+  opacity: 0;
+  transition: opacity 900ms var(--ease) 500ms;
+}
+
+.story[data-revealed="true"] {
+  opacity: 1;
+}
+
+.chrome,
+.readout {
+  opacity: 0;
+  transition: opacity 900ms var(--ease) 900ms;
+}
+
+.chrome[data-revealed="true"],
+.readout[data-revealed="true"] {
+  opacity: 1;
+}
+
+/* Shown when WebGL isn't available at all. */
+.nogl {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  background: radial-gradient(
+      120% 80% at 50% 0%,
+      #12161f 0%,
+      var(--ink) 60%
+    );
+}

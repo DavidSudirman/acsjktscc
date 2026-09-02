@@ -1,0 +1,441 @@
+/* ============================================================
+   The scrollytelling overlay.
+   Everything here floats above a fixed canvas, so it must stay
+   transparent to the pointer except where it genuinely isn't.
+   ============================================================ */
+
+html,
+body {
+  background: var(--ink);
+}
+
+#stage {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+}
+
+#stage canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.story {
+  position: relative;
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* Each chapter is only a length of scroll. Its copy lives in a pinned
+   layer that never leaves the viewport, so a 190vh chapter holds its
+   line as steadily as a 90vh one — a sticky pin would release partway
+   through the long ones and let the type drift off the top. */
+.ch {
+  position: relative;
+}
+
+.ch-pin {
+  position: fixed;
+  inset: 0;
+}
+
+
+/* The copy column. One positioned block per chapter; the cues inside
+   it stay in normal flow so nothing has to be hand-offset. */
+.col {
+  position: absolute;
+  top: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.ch-left .col {
+  left: var(--gutter);
+  width: min(46ch, 46vw);
+  transform: translateY(-50%);
+}
+
+.ch-right .col {
+  right: var(--gutter);
+  width: min(46ch, 46vw);
+  text-align: right;
+  align-items: flex-end;
+  transform: translateY(-50%);
+}
+
+.ch-center .col {
+  left: 50%;
+  width: min(820px, calc(100% - var(--gutter) * 2));
+  text-align: center;
+  align-items: center;
+  transform: translate(-50%, -50%);
+}
+
+.cue {
+  will-change: opacity, transform;
+  opacity: 0;
+  transform: translateY(var(--cue-y, 0px));
+  width: 100%;
+}
+
+/* A slot holds beats that REPLACE each other — successive lines land
+   in the same optical spot instead of stacking down the page. The
+   column collapses to zero height so every child centres on the same
+   optical line regardless of how tall it is. */
+.col-slot {
+  display: block;
+  gap: 0;
+}
+
+.col-slot > .cue {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  transform: translateY(calc(-50% + var(--cue-y, 0px)));
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  align-items: flex-start;
+}
+.stack.center {
+  align-items: center;
+}
+.ch-right .stack {
+  align-items: flex-end;
+}
+
+/* ---------- type ---------- */
+
+.t-hero {
+  font-size: var(--step-hero);
+  line-height: 0.92;
+  letter-spacing: -0.045em;
+  font-weight: 500;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.t-xl {
+  font-size: var(--step-xl);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  font-weight: 500;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.t-lg {
+  font-size: var(--step-lg);
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  font-weight: 500;
+  margin: 0;
+}
+
+.t-xl em,
+.t-hero em {
+  font-style: normal;
+  color: var(--paper);
+  /* A hairline under the emphasised clause instead of a colour shift —
+     colour is reserved for the tracks. */
+  box-shadow: inset 0 -0.08em 0 rgba(234, 231, 224, 0.35);
+}
+
+.muted {
+  color: var(--paper-dim);
+}
+
+.body {
+  font-size: var(--step-md);
+  line-height: 1.6;
+  color: var(--paper-dim);
+  margin: 0;
+  max-width: var(--measure);
+}
+
+.center-body {
+  margin-inline: auto;
+}
+
+.brandline {
+  color: var(--paper-dim);
+  letter-spacing: 0.34em;
+}
+
+/* Big numeric statement — the 15+ payoff. */
+.t-figure {
+  display: block;
+  font-size: clamp(5rem, 20vw, 16rem);
+  line-height: 0.82;
+  letter-spacing: -0.06em;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+.figure-label {
+  letter-spacing: 0.32em;
+  color: var(--paper-dim);
+}
+
+.statrow {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: clamp(28px, 7vw, 84px);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.statrow li {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+}
+
+.t-stat {
+  font-size: clamp(2.4rem, 6vw, 4.2rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+.tagrow {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+}
+
+.ch-right .tagrow {
+  justify-content: flex-end;
+}
+
+.tag {
+  border: 1px solid var(--rule);
+  padding: 5px 10px;
+  border-radius: 2px;
+  color: var(--paper-dim);
+  letter-spacing: 0.1em;
+}
+
+.footnote {
+  color: var(--paper-faint);
+  letter-spacing: 0.1em;
+  margin: 24px 0 0;
+}
+
+/* ---------- scroll hint ---------- */
+
+.scroll-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 44px;
+  transform: translate(-50%, var(--cue-y, 0px));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: auto;
+}
+
+.hint-line {
+  width: 1px;
+  height: 54px;
+  background: linear-gradient(
+    to bottom,
+    var(--paper-faint),
+    transparent
+  );
+  animation: hintdrop 2.4s var(--ease-io) infinite;
+  transform-origin: top;
+}
+
+@keyframes hintdrop {
+  0% {
+    transform: scaleY(0);
+    opacity: 0;
+  }
+  35% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scaleY(1);
+    opacity: 0;
+  }
+}
+
+/* ---------- buttons ---------- */
+
+.cta-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  pointer-events: auto;
+  margin-top: 8px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 22px;
+  border-radius: 2px;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  border: 1px solid transparent;
+  transition: background 0.35s var(--ease), color 0.35s var(--ease),
+    border-color 0.35s var(--ease);
+  pointer-events: auto;
+}
+
+.btn-solid {
+  background: var(--paper);
+  color: var(--ink);
+}
+.btn-solid:hover {
+  background: #fff;
+}
+
+.btn-line {
+  border-color: var(--rule);
+  color: var(--paper);
+}
+.btn-line:hover {
+  border-color: var(--paper-dim);
+  background: rgba(234, 231, 224, 0.04);
+}
+
+/* ---------- chrome: nav + progress ---------- */
+
+.chrome {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px var(--gutter);
+  pointer-events: none;
+  mix-blend-mode: difference;
+}
+
+.chrome a,
+.chrome button {
+  pointer-events: auto;
+}
+
+.brand {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.brand .mark {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  border: 1px solid currentColor;
+  padding: 3px 6px;
+  border-radius: 2px;
+  color: inherit;
+}
+
+.brand .full {
+  font-size: 0.875rem;
+  color: inherit;
+}
+
+.chrome-nav {
+  display: flex;
+  gap: 26px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.chrome-nav a {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  opacity: 0.65;
+  transition: opacity 0.3s var(--ease);
+}
+
+.chrome-nav a:hover {
+  opacity: 1;
+}
+
+/* Chapter readout + progress bar, bottom-left. */
+.readout {
+  position: fixed;
+  left: var(--gutter);
+  bottom: 26px;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  pointer-events: none;
+  mix-blend-mode: difference;
+}
+
+.readout .idx {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.progress-track {
+  width: clamp(80px, 18vw, 220px);
+  height: 1px;
+  background: rgba(234, 231, 224, 0.22);
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 0%;
+  background: var(--paper);
+}
+
+@media (max-width: 720px) {
+  .chrome-nav {
+    display: none;
+  }
+  /* Phones get one full-bleed column whatever the chapter's desktop
+     alignment — 46ch of copy pushed to one edge doesn't survive 390px. */
+  .ch-left .col,
+  .ch-right .col {
+    left: var(--gutter);
+    right: var(--gutter);
+    width: auto;
+    text-align: left;
+    align-items: flex-start;
+  }
+  .ch-right .tagrow {
+    justify-content: flex-start;
+  }
+  .readout {
+    bottom: 18px;
+  }
+}

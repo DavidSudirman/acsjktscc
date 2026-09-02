@@ -1,0 +1,142 @@
+/* ============================================================
+   ACS SCC — design tokens
+   Monochrome graphite environment. Colour is reserved for the
+   four tracks, so it always means something when it appears.
+   ============================================================ */
+
+:root {
+  /* Ground */
+  --ink: #06070a;
+  --ink-1: #0a0c11;
+  --ink-2: #10131a;
+  --ink-3: #171b24;
+
+  /* Structure */
+  --rule: #1e232e;
+  --rule-soft: #14181f;
+
+  /* Type */
+  --paper: #eae7e0;
+  --paper-dim: #9198a4;
+  --paper-faint: #5b626f;
+
+  /* Track signals — the only saturated colour in the system */
+  --python: #d9a441;
+  --robotics: #e4572e;
+  --webai: #5ac8de;
+  --dsa: #9fd356;
+
+  /* Type scale */
+  --font-display: "Inter Tight", "Inter", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --step-hero: clamp(2.75rem, 9vw, 7.5rem);
+  --step-xl: clamp(2rem, 5.5vw, 4rem);
+  --step-lg: clamp(1.5rem, 3.2vw, 2.25rem);
+  --step-md: clamp(1.0625rem, 1.5vw, 1.25rem);
+  --step-sm: 0.9375rem;
+  --step-xs: 0.75rem;
+
+  --measure: 34ch;
+  --gutter: clamp(20px, 5vw, 64px);
+  --max: 1240px;
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-io: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-display);
+  font-size: 16px;
+  line-height: 1.55;
+  font-synthesis-weight: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+::selection {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+/* ---------- shared primitives ---------- */
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: var(--step-xs);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--paper-faint);
+  font-weight: 400;
+}
+
+.rule {
+  height: 1px;
+  background: var(--rule);
+  border: 0;
+  margin: 0;
+}
+
+/* Fine grain + vignette. Kept in CSS rather than a postprocessing
+   pass — cheaper, and it avoids the bloom-heavy look entirely. */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.038;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.vignette {
+  position: fixed;
+  inset: 0;
+  z-index: 59;
+  pointer-events: none;
+  background: radial-gradient(
+    120% 90% at 50% 45%,
+    transparent 40%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

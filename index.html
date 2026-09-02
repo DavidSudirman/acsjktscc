@@ -1,170 +1,36 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>ACS STEM/Coding Club (ACS SCC)</title>
-<meta name="description" content="ACS STEM/Coding Club — building projects, running workshops, and growing a community of student developers." />
-<link rel="stylesheet" href="css/style.css" />
-</head>
-<body>
-
-<header class="site-header">
-  <nav class="nav container">
-    <a href="index.html" class="brand">
-      <span class="logo-badge">SCC</span>
-      ACS STEM/Coding Club
-    </a>
-    <ul class="nav-links">
-      <li><a href="index.html" class="active">Home</a></li>
-      <li><a href="projects.html">Projects</a></li>
-      <li><a href="sessions.html">Sessions</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="join.html">Join / Contact</a></li>
-    </ul>
-    <button class="nav-toggle" aria-label="Toggle menu">☰</button>
-  </nav>
-</header>
-
-<section class="hero">
-  <div class="container">
-    <span class="eyebrow">ACS STEM / Coding Club</span>
-    <h1>We build. We learn. <span>We ship code.</span></h1>
-    <p>ACS SCC is a student-run club with four tracks — Beginner Python, Robotics, Web Dev/AI, and DSA — where members build real projects and prep for competitions together.</p>
-    <div class="hero-actions">
-      <a href="projects.html" class="btn btn-primary">See our projects</a>
-      <a href="join.html" class="btn btn-outline">Join the club</a>
-    </div>
-
-    <div class="stats">
-      <div class="stat-card">
-        <div class="num">40+</div>
-        <div class="label">Active members</div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#06070a" />
+    <title>ACS STEM/Coding Club</title>
+    <meta
+      name="description"
+      content="ACS SCC is a student-run club with four tracks — Beginner Python, Robotics, Web Dev/AI, and DSA — where members build real projects and prep for competitions together."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>
+      <div style="padding: 12vh 6vw; font-family: system-ui; color: #eae7e0">
+        <h1>ACS STEM/Coding Club</h1>
+        <p>
+          This page is an interactive 3D experience and needs JavaScript. You can
+          still browse
+          <a href="/projects.html" style="color: #eae7e0">projects</a>,
+          <a href="/sessions.html" style="color: #eae7e0">sessions</a>,
+          <a href="/about.html" style="color: #eae7e0">about</a>, and
+          <a href="/join.html" style="color: #eae7e0">how to join</a>.
+        </p>
       </div>
-      <div class="stat-card">
-        <div class="num">15+</div>
-        <div class="label">Projects built</div>
-      </div>
-      <div class="stat-card">
-        <div class="num">30+</div>
-        <div class="label">Sessions run</div>
-      </div>
-      <div class="stat-card">
-        <div class="num">3</div>
-        <div class="label">Years running</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="container">
-    <div class="section-header">
-      <h2>Featured Projects</h2>
-      <p>A few things members have built this year.</p>
-    </div>
-    <div class="grid">
-      <div class="card">
-        <div class="card-media">🤖</div>
-        <div class="card-body">
-          <h3>Line-Following Robot</h3>
-          <p>An Arduino-powered robot that uses IR sensors to follow a track — our intro robotics build.</p>
-          <div class="tags">
-            <span class="tag">Robotics</span>
-            <span class="tag">Arduino</span>
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-media">🌦️</div>
-        <div class="card-body">
-          <h3>Weather Dashboard</h3>
-          <p>A live weather dashboard built during our web dev workshop series, using a public weather API.</p>
-          <div class="tags">
-            <span class="tag">Web Dev</span>
-            <span class="tag">JavaScript</span>
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-media">🧩</div>
-        <div class="card-body">
-          <h3>Algorithm Visualizer</h3>
-          <p>A tool that animates sorting and pathfinding algorithms to help members study for interviews.</p>
-          <div class="tags">
-            <span class="tag">DSA</span>
-            <span class="tag">JavaScript</span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div style="text-align:center; margin-top:36px;">
-      <a href="projects.html" class="btn btn-outline">View all projects</a>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="container">
-    <div class="section-header">
-      <h2>Upcoming Sessions</h2>
-      <p>Drop in — no experience required.</p>
-    </div>
-    <div class="timeline">
-      <div class="timeline-item">
-        <div class="date">Aug 26, 2026</div>
-        <h3>Intro to Git & GitHub <span class="badge upcoming">Upcoming</span></h3>
-        <p>Learn version control basics before we start our fall project cycle.</p>
-      </div>
-      <div class="timeline-item">
-        <div class="date">Sept 2, 2026</div>
-        <h3>Project Kickoff Night <span class="badge upcoming">Upcoming</span></h3>
-        <p>Pitch project ideas and form teams for the semester.</p>
-      </div>
-    </div>
-    <div style="text-align:center; margin-top:16px;">
-      <a href="sessions.html" class="btn btn-outline">See full schedule</a>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="container">
-    <div class="callout">
-      <h2>Want to build something with us?</h2>
-      <p>Whether you're brand new to coding or already shipping side projects, there's a place for you in ACS SCC.</p>
-      <a href="join.html" class="btn btn-primary">Join the Club</a>
-    </div>
-  </div>
-</section>
-
-<footer class="site-footer">
-  <div class="container">
-    <div class="footer-grid">
-      <div>
-        <h4>ACS STEM/Coding Club</h4>
-        <p style="color:var(--text-dim); font-size:0.9rem; max-width:260px;">A student club for building projects, learning to code, and growing together.</p>
-      </div>
-      <div>
-        <h4>Explore</h4>
-        <ul>
-          <li><a href="projects.html">Projects</a></li>
-          <li><a href="sessions.html">Sessions</a></li>
-          <li><a href="about.html">About Us</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4>Get Involved</h4>
-        <ul>
-          <li><a href="join.html">Join the Club</a></li>
-          <li><a href="join.html#contact">Contact Us</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">© 2026 ACS STEM/Coding Club. All rights reserved.</div>
-  </div>
-</footer>
-
-<script src="js/main.js"></script>
-</body>
+    </noscript>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>
